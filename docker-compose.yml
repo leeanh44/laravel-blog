@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "${PORT_NGINX}:80"
+    depends_on:
+      - php-fpm
+    volumes:
+      # Logging
+      - ./nginx/log:/var/log/nginx/
+      # Volume đến code ứng dụng, giống bên php-fpm nữa
+      - ./:/var/www/html
+  mysql: #DB_HOST
+    image: mysql:5.7
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root
+    # Volumes này đang sử dụng theo dạng biến đó
+    # Nó tương đương khai báo VOLUME trong Dockerfile, sinh volume dạng mã băm
+    volumes:
+      - db_data:/var/lib/mysql
+  php-fpm:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    volumes:
+        - ./:/var/www/html
+volumes:
+  db_data: {}
