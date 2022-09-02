@@ -1,4 +1,4 @@
-name: Laravel
+name: Circle CI/CD
 
 on:
   push:
@@ -7,10 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  laravel-tests:
-
+  tests:
     runs-on: ubuntu-latest
-
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -34,15 +32,18 @@ jobs:
     #    DB_DATABASE: database/database.sqlite
     #  run: ""vendor/bin/phpunit
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
-          script: "sudo su - www_user"
-          script: "bash ~/scripts/deploy.sh"
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSHKEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          ls -la
+          bash ~/scripts/deploy.sh

@@ -57,7 +57,7 @@ class Post extends Model
    public function getImagePathAttribute()
    {
         switch (true) {
-            case !$this->thumbnail:
+            case empty($this->thumbnail):
                 return '/images/logo.jpeg';
             case Storage::exists($this->thumbnail):
                 return '/storage' . ((\App::environment() === 'local') ? '/public/' : '/' ) . $this->thumbnail;

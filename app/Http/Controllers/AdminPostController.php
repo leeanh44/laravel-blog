@@ -40,7 +40,7 @@ class AdminPostController extends Controller
 
         if ($attributes['thumbnail'] ?? false) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
-        } elseif ($attributes['imagepath']) {
+        } elseif ($attributes['imagepath'] && ($attributes['imagepath'] !== '/images/logo.jpeg')) {
             $attributes['thumbnail'] = $attributes['imagepath'];
         }
         unset($attributes['imagepath']);

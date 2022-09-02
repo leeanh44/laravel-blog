@@ -14,7 +14,7 @@
 
                 <img src="{{ $post->image_path }}" alt="" class="rounded-xl ml-6" width="100">
             </div>
-            <x-form.input name="imagepath" :value="old('thumbnail', $post->image_path)" />
+            <x-form.input name="imagepath" :value="old('imagepath', $post->image_path)" />
 
             <x-form.textarea name="excerpt" required>{{ old('excerpt', $post->excerpt) }}</x-form.textarea>
             <x-form.textarea name="body" required>{{ old('body', $post->body) }}</x-form.textarea>
