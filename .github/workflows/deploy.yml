@@ -2,9 +2,13 @@ name: Circle CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - deploy-envoy
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+      - deploy-envoy
 
 jobs:
   tests:
@@ -47,3 +51,19 @@ jobs:
         script: |
           ls -la
           bash ~/scripts/deploy.sh
+    if: github.ref == 'refs/heads/deploy-envoy'
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSHKEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /var/www/app/current
+          ls -la
+          php vendor/bin/envoy run deploy --branch=deploy-envoy
