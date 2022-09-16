@@ -1,6 +1,6 @@
-<header class="max-w-xl mx-auto mt-20 text-center">
+<header class="max-4w-xl mx-auto mt-20 text-center">
     <h1 class="text-4xl">
-        Latest <span class="text-blue-500">Topic</span> News
+        Serial <span class="text-blue-500">Amazon Web Services (AWS)</span> tutorial<br>for beginners
     </h1>
 
     <div class="space-y-2 lg:space-y-0 lg:space-x-4 mt-4">

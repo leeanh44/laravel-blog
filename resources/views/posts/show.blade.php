@@ -1,6 +1,6 @@
 <x-layout>
     <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
-        <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
+        <article class="max-w-8xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
             <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
                 <img src="{{ $post->image_path }}" alt="" class="rounded-xl">
                 <p class="mt-4 block text-gray-400 text-xs">

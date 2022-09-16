@@ -8,6 +8,10 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\DeployController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminCommentController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
@@ -26,5 +30,9 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 
 // Admin Section
 Route::middleware('can:admin')->group(function () {
+    Route::resource('admin', AdminController::class)->except('show');
+    Route::resource('admin/users', AdminUserController::class)->except('show');
     Route::resource('admin/posts', AdminPostController::class)->except('show');
+    Route::resource('admin/categories', AdminCategoryController::class)->except('show');
+    Route::resource('admin/comments', AdminCommentController::class)->except('show', 'edit');
 });
