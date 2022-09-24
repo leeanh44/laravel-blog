@@ -3,7 +3,7 @@
 @setup
     $path = __DIR__;
     $now = new DateTime();
-    $gitRepo = 'git@github.com:leeanh44/laravel-blog.git';
+    $gitRepo = 'https://github.com/leeanh44/laravel-blog.git';
     $branch = 'deploy-envoy';
     $defaultBrand = 'main';
     $release = 'releases/' . $now->format('Y-m-d_H-i-s');
@@ -23,6 +23,8 @@
     permissions
     update-current
 @endstory
+
+#@slack('https://hooks.slack.com/services/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', 'slack-notifi', 'Deployment started.')
 
 @task('git')
     echo "Deployment {{ $now->format('Y-m-d_H-i-s') }} started"
@@ -45,12 +47,14 @@
     @if (!file_exists('share/.env'))
         cp "{{ $release . '/.env.example' }}" "share/.env"
     @endif
+    rm -rf {{ $release }}/storage
+    ln -s {{ $path}} /share/storage {{ $release }}/storage
 
     ln -nfs {{ $path }}/share/.env {{ $release }}/.env
 @endtask
 
 @task('install')
-    cd {{ $release }}
+    # cd {{ $release }}
     composer install --no-interaction
 
     php ./artisan key:generate
@@ -82,6 +86,8 @@
     cd {{ $path }}/releases
     find . -maxdepth 1 -name "20*" | sort | head -n -1 | xargs rm -Rf
 @endtask
+
+#@slack('https://hooks.slack.com/services/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', 'slack-notifi', 'Deployment finished.')
 
 @finished
     echo "Finished!!!!";
