@@ -54,7 +54,7 @@
 @endtask
 
 @task('install')
-    # cd {{ $release }}
+    # cd {{ $path }}/{{ $release }}
     composer install --no-interaction
 
     php ./artisan key:generate
@@ -63,7 +63,7 @@
 @endtask
 
 @task('scripts')
-    cd {{ $release }}
+    # cd {{ $path }}/{{ $release }}
     # yarn install --non-interactive
     # yarn prod
 @endtask

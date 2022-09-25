@@ -57,8 +57,11 @@ jobs:
         key: ${{ secrets.SSHKEY }}
         port: ${{ secrets.PORT }}
         script: |
+          curl -X POST --data-urlencode "payload={\"channel\": \"#slack-notifi\", \"username\": \"webhookbot\", \"text\": \"Haki deployment started! `date +"%nDATE: %D%nTIME: %T"`.\", \"icon_emoji\": \":ghost:\"}" https://hooks.slack.com/services/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
           cd /var/www/app/current
-          git branch
+          git config --replace-all remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
           git fetch
           git checkout deploy-envoy
+          composer install
           php vendor/bin/envoy run deploy --branch=deploy-envoy
+          curl -X POST --data-urlencode "payload={\"channel\": \"#slack-notifi\", \"username\": \"webhookbot\", \"text\": \"Haki deployment finished! `date +"%nDATE: %D%nTIME: %T"`.\", \"icon_emoji\": \":ghost:\"}" https://hooks.slack.com/services/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
