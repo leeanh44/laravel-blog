@@ -54,8 +54,8 @@ class Post extends Model
     *
     * @return string
     */
-   public function getImagePathAttribute()
-   {
+    public function getImagePathAttribute()
+    {
         switch (true) {
             case empty($this->thumbnail):
                 return '/images/logo.jpeg';
@@ -66,5 +66,15 @@ class Post extends Model
             default:
                 return '/images/logo.jpeg';
         }
-   }
+    }
+
+    /**
+    * Count read.
+    */
+    public function incrementReadCount()
+    {
+        $this->reads++;
+
+        return $this->save();
+    }
 }

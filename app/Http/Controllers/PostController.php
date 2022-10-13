@@ -18,6 +18,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        $post->incrementReadCount();
+
         return view('posts.show', [
             'post' => $post
         ]);

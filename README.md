@@ -1,6 +1,6 @@
-# Laravel Blog
+# Haki Blog
 
-http://18.141.81.183/
+https://haki.tk
 
 ## Installation
 
