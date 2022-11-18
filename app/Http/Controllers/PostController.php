@@ -35,7 +35,7 @@ class PostController extends Controller
         $post->incrementReadCount();
 
         // Push notification admin
-        $this->firebaseService->pushMessageAdmin('Blog view post');
+        $this->firebaseService->pushMessageAdmin('Blog view post: ' . $post->title);
 
         return view('posts.show', [
             'post' => $post
