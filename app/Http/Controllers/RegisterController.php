@@ -21,6 +21,8 @@ class RegisterController extends Controller
         ]);
 
         auth()->login(User::create($attributes));
+        // Push notification admin
+        $this->firebaseService->pushMessageAdmin('Haki register new account');
 
         return redirect('/')->with('success', 'Your account has been created.');
     }

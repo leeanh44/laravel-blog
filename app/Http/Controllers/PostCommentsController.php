@@ -17,6 +17,8 @@ class PostCommentsController extends Controller
             'user_id' => request()->user()->id,
             'body' => request('body')
         ]);
+        // Push notification admin
+        $this->firebaseService->pushMessageAdmin('Haki new comment post');
 
         return back();
     }
