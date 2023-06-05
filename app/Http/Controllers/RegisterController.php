@@ -3,9 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\FirebaseService;
 
 class RegisterController extends Controller
 {
+    /**
+     * @var FirebaseService
+     */
+    protected $firebaseService;
+
+    /**
+     * @param FirebaseService $firebaseService
+     */
+    public function __construct(FirebaseService $firebaseService)
+    {
+        $this->firebaseService = $firebaseService;
+    }
+
     public function create()
     {
         return view('register.create');
